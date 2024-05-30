@@ -1,0 +1,15 @@
+CREATE TABLE Pacjent (PESEL varchar(11) NOT NULL, imie varchar(255) NOT NULL, nazwisko varchar(255) NOT NULL, PRIMARY KEY (PESEL));
+CREATE TABLE Badanie (id MEDIUMINT NOT NULL AUTO_INCREMENT, PacjentPESEL varchar(11) NOT NULL, data date NOT NULL, PRIMARY KEY (id));
+CREATE TABLE Wzorzec (typ SERIAL NOT NULL, granica_dolna int4, granica_gorna int4, PRIMARY KEY (typ));
+CREATE TABLE Lekarz (id MEDIUMINT NOT NULL AUTO_INCREMENT, imie varchar(255) NOT NULL, nazwisko varchar(255) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE Lekarz_Badanie (Lekarzid MEDIUMINT NOT NULL, Badanieid MEDIUMINT NOT NULL, PRIMARY KEY (Lekarzid, Badanieid));
+CREATE TABLE Powiadomienia (Badanieid MEDIUMINT NOT NULL, wiadomosc varchar(255), PRIMARY KEY (Badanieid));
+CREATE TABLE Wynik (wartosc int4 NOT NULL, Badanieid MEDIUMINT NOT NULL, typ int4 NOT NULL, PRIMARY KEY (Badanieid));
+ALTER TABLE Badanie ADD CONSTRAINT FKBadanie481915 FOREIGN KEY (PacjentPESEL) REFERENCES Pacjent (PESEL);
+ALTER TABLE Lekarz_Badanie ADD CONSTRAINT FKLekarz_Bad152264 FOREIGN KEY (Lekarzid) REFERENCES Lekarz (id);
+ALTER TABLE Lekarz_Badanie ADD CONSTRAINT FKLekarz_Bad147768 FOREIGN KEY (Badanieid) REFERENCES Badanie (id);
+ALTER TABLE Powiadomienia ADD CONSTRAINT FKPowiadomie762250 FOREIGN KEY (Badanieid) REFERENCES Badanie (id);
+ALTER TABLE Wynik ADD CONSTRAINT FKWynik484398 FOREIGN KEY (typ) REFERENCES Wzorzec (typ);
+
+
+

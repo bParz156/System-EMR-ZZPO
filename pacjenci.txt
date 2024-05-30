@@ -1,0 +1,15 @@
+40920912572;Teofil;Koliber
+07835261204;Maksymilian;Nowak
+95624691534;Maksymilian;Mocarz
+33659227562;Ludwik;Nowak
+09017834449;Malgorzata;Kowalczuk
+22559114360;Maksymilian;Nowak
+17975676245;Katarzyna;Nowak
+80723606666;Ludwik;Zegarewicz
+33588950967;Zdzislaw;Kowalczuk
+05387861556;Malgorzata;Fart
+86294755367;Ludwik;Mocarz
+54784148137;Zofia;Fart
+41376897052;Maksymilian;Mocarz
+69931675839;Maksymilian;Mocarz
+07882660328;Teofil;Fart
