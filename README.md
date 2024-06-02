@@ -1,5 +1,1 @@
-W folderze docs znajdują się pliki do utowrzenia i wypełnienia bazy danych. 
-Plik do stworzenia powinien zostać wywołany w konsoli w HeidiSQL, pozostałe są wykorzystywane w kodzie programu
-
-<br>
-Tworzenie bazy zwraca błąd o kluczu obcym w tabeli Wynik a Wzorzec
+Inna wersja projektu oparta o fabrykę i SOLID. Diagram CLass 1 i bazy 2
