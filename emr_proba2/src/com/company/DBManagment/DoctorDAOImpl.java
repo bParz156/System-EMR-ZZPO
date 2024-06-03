@@ -28,10 +28,11 @@ public class DoctorDAOImpl implements DoctorDAO {
             if(rs.next()) {
                 String name = rs.getString("Name");
                 String surname = rs.getString("Surname");
-                List<Patient> patientList = new ArrayList<>();
+               // List<Patient> patientList = new ArrayList<>();
                 String specialityString=rs.getString("Speciality");
                 Speciality speciality=Speciality.valueOf(specialityString);
-                doctor=new Doctor(id, name, surname, patientList, speciality);
+              //  doctor=new Doctor(id, name, surname, patientList, speciality);
+                doctor=new Doctor(id, name, surname, speciality);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,10 +52,11 @@ public class DoctorDAOImpl implements DoctorDAO {
                 int id= rs.getInt("Id");
                 String name=rs.getString("Name");
                 String surname=rs.getString("Surname");
-                List<Patient> patientList = new ArrayList<>();
+              //  List<Patient> patientList = new ArrayList<>();
                 String specialityString=rs.getString("Speciality");
                 Speciality speciality=Speciality.valueOf(specialityString);
-                Doctor doctor=new Doctor(id, name, surname, patientList , speciality);
+              //  Doctor doctor=new Doctor(id, name, surname, patientList , speciality);
+                Doctor doctor=new Doctor(id, name, surname , speciality);
                 doctorList.add(doctor);
             }
         }

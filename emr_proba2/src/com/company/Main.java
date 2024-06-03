@@ -16,15 +16,12 @@ public class Main {
         try {
             ManagerDB managerDB=new ManagerDB();
             DoctorDAO doctorDAO = new DoctorDAOImpl(managerDB);
-            int id=3;
-            String Name="Aneczka";
-            String Surname="Nowakowska";
-            Speciality speciality=Speciality.Neurolog;
+            int id=2;
+            String Name="Maria";
+            String Surname="Kowal";
+            Speciality speciality=Speciality.Kardiolog;
 
-            Doctor doc= new Doctor(doctorDAO,id,Name, Surname,null, speciality);
-            System.out.println(doc);
-            doc.setSpeciality(Speciality.Kardiolog);
-            System.out.println(doc);
+            Doctor doc= new Doctor(doctorDAO,id,Name, Surname, speciality);
         }
         catch (SQLException e)
         {
