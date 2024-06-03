@@ -1,5 +1,5 @@
-CREATE TABLE Patient (PESEL varchar(11) NOT NULL, Name varchar(255), Surname varchar(255), PhoneNumber varchar(9), Birthday date, Doctors int4, Tests int4, PRIMARY KEY (PESEL));
-CREATE TABLE Doctor (Id SERIAL NOT NULL, Name varchar(255) NOT NULL, Surname varchar(255) NOT NULL, Patients int4 NOT NULL, Speciality int4 NOT NULL, PRIMARY KEY (Id));
+CREATE TABLE Patient (PESEL varchar(11) NOT NULL, Name varchar(255), Surname varchar(255), PhoneNumber varchar(9), Birthday date, PRIMARY KEY (PESEL));
+CREATE TABLE Doctor (Id SERIAL NOT NULL, Name varchar(255) NOT NULL, Surname varchar(255) NOT NULL, Speciality int4 NOT NULL, PRIMARY KEY (Id));
 CREATE TABLE Speciality (ID SERIAL NOT NULL, name varchar(50) NOT NULL, PRIMARY KEY (ID));
 CREATE TABLE TestOrder (Id SERIAL NOT NULL, OrderDate date NOT NULL, Doctor int4 NOT NULL, Patient varchar(11) NOT NULL, PRIMARY KEY (Id));
 CREATE TABLE TestResult (Id SERIAL NOT NULL, TestOrder int4 NOT NULL, ResultDate date NOT NULL, Name varchar(255) NOT NULL, value float4 NOT NULL, type int4 NOT NULL, PRIMARY KEY (Id));
@@ -12,3 +12,6 @@ ALTER TABLE TestOrder ADD CONSTRAINT FKTestOrder759135 FOREIGN KEY (Doctor) REFE
 ALTER TABLE TestResult ADD CONSTRAINT FKTestResult826315 FOREIGN KEY (TestOrder) REFERENCES TestOrder (Id);
 ALTER TABLE Doctor ADD CONSTRAINT FKDoctor584439 FOREIGN KEY (Speciality) REFERENCES Speciality (ID);
 ALTER TABLE TestResult ADD CONSTRAINT FKTestResult775934 FOREIGN KEY (type) REFERENCES TestWzorzec (ID);
+
+
+
