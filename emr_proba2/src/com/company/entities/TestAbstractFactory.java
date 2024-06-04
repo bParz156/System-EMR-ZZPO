@@ -20,5 +20,21 @@ public class TestAbstractFactory {
         return testResult;
     }
 
+    void setGranice(TestTyp testTyp, float down, float up)
+    {
+        switch (testTyp)
+        {
+            case Hemoglobina -> {
+                new TestHemoglobinaFactory().setGranice(down, up);
+                break;
+            }
+            case CisnienieSkurczowe -> {
+                new TestCisnienieFactory().setGranice(down, up);
+                break;
+            }
+        }
+    }
+
+
 
 }

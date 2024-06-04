@@ -10,4 +10,11 @@ public class TestCisnienieFactory implements TestFactory {
         TestResult result = new TestCisnienie();
         return result;
     }
+
+    @Override
+    public void setGranice(float down, float up) {
+        TestCisnienie.setSkurczoweDolne((int)down);
+        TestCisnienie.setskurczoweGorne((int)up);
+
+    }
 }

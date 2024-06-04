@@ -11,4 +11,10 @@ public class TestHemoglobinaFactory implements TestFactory {
         TestResult result = new TestHemoglobina();
         return result;
     }
+
+    @Override
+    public void setGranice(float down, float up) {
+        TestHemoglobina.setWartoscDolna(down);
+        TestHemoglobina.setWartoscGorna(up);
+    }
 }

@@ -6,11 +6,11 @@ import com.company.entities.TestTyp;
 
 public interface TestResultDAO {
 
+    void setGranice(TestTyp typ);
     TestResult getById(int id);
-
-    static void setGranice(TestTyp typ) {};
-    void add(TestResult result);
+    void add(TestResult result, TestOrder testOrder);
     void delete(int id);
+    void update(TestResult result);
 
 
 }
