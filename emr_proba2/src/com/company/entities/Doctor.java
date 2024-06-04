@@ -2,6 +2,8 @@ package com.company.entities;
 
 import com.company.DBManagment.DoctorDAO;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,17 +14,12 @@ public class Doctor {
 	private String surname;
 	private List<Patient> patients;
 	private Speciality speciality;
+	private static DoctorDAO doctorDAO;
 
-	public void setDoctorDAO(DoctorDAO doctorDAO) {
-		this.doctorDAO = doctorDAO;
+	public static void setDoctorDAO(DoctorDAO doctorDAO) {
+		Doctor.doctorDAO = doctorDAO;
 	}
 
-	private DoctorDAO doctorDAO;
-
-	public Doctor (DoctorDAO doctorDAO)
-	{
-		this.doctorDAO=doctorDAO;
-	}
 
 	public Doctor(int id, String name, String surname, Speciality speciality) {
 		this.id = id;
@@ -31,20 +28,17 @@ public class Doctor {
 		this.speciality = speciality;
 	}
 
-	public Doctor(DoctorDAO doctorDAO, int id, String name, String surname, Speciality speciality) {
-		this(id,name, surname, speciality);
-		this.doctorDAO=doctorDAO;
-		try{
-			if (doctorDAO.getById(id)==null)
-			{
-				addToDB();
-			}
-		}
-		catch(Exception e)
+	public Doctor(int id, String name, String surname, Speciality speciality, DoctorDAO doctorDAO) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.speciality = speciality;
+		if (doctorDAO.getById(id)==null)
 		{
-			System.out.println(e.getMessage());
+			addToDB();
 		}
 	}
+
 
 
 	public int getId() {
@@ -100,30 +94,25 @@ public class Doctor {
 	}
 
 	/**
-	 * 
-	 * @param patient
-	 * @param testType
-	 */
-	public TestOrder orderTest(Patient patient, String testType) {
-		// TODO - implement Doctor.orderTest
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
+	 * Order a test <-you can pick multiple testTypes
 	 * @param patient
 	 * @param testTypes
 	 */
-	public List<TestOrder> orderMultipleTest(Patient patient, List<String> testTypes) {
-		// TODO - implement Doctor.orderMultipleTest
-//		List<TestOrder> orders = new List<TestOrder>();
-//		for (String type : testTypes)
-//		{
-//			orders.add(orderTest(patient, type));
-//		}
-//		return orders;
-		return null;
+	public TestOrder orderTest(Patient patient, String [] testTypes) {
+		//long millis=System.currentTimeMillis();
+		//Date date=new Date(millis);
+		Date date=Date.valueOf("2024-06-04");
+		int n=testTypes.length;
+		TestTyp[] types=new TestTyp[n];
+		for(int i=0; i<n; i++)
+		{
+			types[i]=TestTyp.valueOf(testTypes[i]);
+		}
+
+		return TestOrder.createNewTestOrder(date, this, patient,types);
 	}
+
+
 
 	private void addToDB() {
 		doctorDAO.add(this);
@@ -143,6 +132,14 @@ public class Doctor {
 				"Speciality: "+this.speciality.toString();
 
 	}
+
+
+	public static Doctor getDoctor(int id)
+	{
+		return doctorDAO.getById(id);
+	}
+
+
 
 
 }

@@ -18,16 +18,12 @@ public class Patient {
 	private Date birthday;
 	private List<Doctor> doctors;
 	private List<TestOrder> tests;
+	private static PatientDAO patientDAO;
 
-	public void setPatientDAO(PatientDAO patientDAO) {
-		this.patientDAO = patientDAO;
+	public static void setPatientDAO(PatientDAO patientDAO) {
+		Patient.patientDAO = patientDAO;
 	}
 
-	private PatientDAO patientDAO;
-
-	public Patient(PatientDAO patientDAO) {
-		this.patientDAO = patientDAO;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -182,6 +178,12 @@ public class Patient {
 			doctors.remove(doctor);
 			update();
 		}
+	}
+
+
+	public static Patient getPatient(String PESEL)
+	{
+		return patientDAO.getByPESEL(PESEL);
 	}
 
 
