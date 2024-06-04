@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/System-EMR-ZZPO.iml" filepath="$PROJECT_DIR$/System-EMR-ZZPO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/emr_proba2.iml" filepath="$PROJECT_DIR$/emr_proba2.iml" />
     </modules>
   </component>
 </project>
