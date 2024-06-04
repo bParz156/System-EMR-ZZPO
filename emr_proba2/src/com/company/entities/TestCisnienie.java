@@ -12,12 +12,23 @@ public class TestCisnienie extends TestResult {
 	private static int rozkurczoweGorne;
 
 	public TestCisnienie(int id, int rozkurczowe, int skurczowe, Date date) {
+		super(date, TestTyp.CisnienieSkurczowe);
 		this.rozkurczowe = rozkurczowe;
 		this.skurczowe = skurczowe;
-		this.name = "Cisnienie";
 		this.id=id;
-		this.resultDate=date;
 	}
+
+	public TestCisnienie(Date date)
+	{
+		super(date, TestTyp.CisnienieSkurczowe);
+	}
+
+
+	public TestCisnienie()
+	{
+		this(Date.valueOf("2023-09-02"));
+	}
+
 
 	public static int getSkurczoweDolne() {
 		return skurczoweDolne;
@@ -78,7 +89,7 @@ public class TestCisnienie extends TestResult {
 
 	@Override
 	public String getResult() {
-		return  "Typ:"+this.name+"; data: "+this.resultDate+"; wynik rozkurczowe:"+this.rozkurczowe+ "; Granice: "+rozkurczoweDolne+"-"+rozkurczoweGorne+
+		return  "Typ:"+this.testTyp.name()+"; data: "+this.resultDate+"; wynik rozkurczowe:"+this.rozkurczowe+ "; Granice: "+rozkurczoweDolne+"-"+rozkurczoweGorne+
 				" wynik skurczowe"+this.skurczowe+"; Granice: "+skurczoweDolne+"-"+skurczoweGorne;
 	}
 
@@ -95,5 +106,10 @@ public class TestCisnienie extends TestResult {
 	@Override
 	public boolean isCorrect() {
 		return this.isRozkurczoweCorrect() && this.isSkurczoweCorrect();
+	}
+
+	@Override
+	void create() {
+
 	}
 }

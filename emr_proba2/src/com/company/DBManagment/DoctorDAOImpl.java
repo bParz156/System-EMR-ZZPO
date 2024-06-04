@@ -36,7 +36,7 @@ public class DoctorDAOImpl implements DoctorDAO {
                 Speciality speciality=Speciality.fromValue(specialityId);
               //  doctor=new Doctor(id, name, surname, patientList, speciality);
                 doctor=new Doctor(id, name, surname, speciality);
-                doctor.setDoctorDAO(this);
+            //    doctor.setDoctorDAO(this);
                 List<Patient> patientList = doctorPatientDAO.getDoctorsPatients(doctor);
                 doctor.setPatients(patientList);
             }
@@ -63,7 +63,7 @@ public class DoctorDAOImpl implements DoctorDAO {
                 Speciality speciality=Speciality.fromValue(specialityId);
               //  Doctor doctor=new Doctor(id, name, surname, patientList , speciality);
                 Doctor doctor=new Doctor(id, name, surname , speciality);
-                doctor.setDoctorDAO(this);
+              //  doctor.setDoctorDAO(this);
                 List<Patient> patientList = doctorPatientDAO.getDoctorsPatients(doctor);
                 doctor.setPatients(patientList);
                 doctorList.add(doctor);

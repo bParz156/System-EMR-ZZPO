@@ -12,7 +12,7 @@ public interface TestOrderDAO {
     List<TestOrder> getByPatient(Patient patient);
     List<TestOrder> getByDoctor(Doctor doctor);
     List<TestOrder> getByDoctorAndPatient(Doctor doctor, Patient patient);
-    void add(TestOrder testOrder);
+    int add(TestOrder testOrder);
     void update(TestOrder testOrder);
     void delete(int id);
 }

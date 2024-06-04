@@ -5,6 +5,7 @@ import com.company.DBManagment.*;
 import com.company.entities.Doctor;
 import com.company.entities.Patient;
 import com.company.entities.Speciality;
+import com.company.entities.TestOrder;
 import com.company.exceptions.PatientNotFoundException;
 
 import javax.print.Doc;
@@ -19,13 +20,21 @@ public class Main {
             ManagerDB managerDB=new ManagerDB();
             DoctorDAO doctorDAO = new DoctorDAOImpl(managerDB);
             PatientDAO patientDAO =new PatientDAOImpl(managerDB);
+            TestOrderDAO testOrderDAO=new TestOrderDAOImpl(managerDB);
+            Doctor.setDoctorDAO(doctorDAO);
+            TestOrder.setTestOrderDAO(testOrderDAO);
+            Patient.setPatientDAO(patientDAO);
 
             List<Doctor> doctorList=doctorDAO.getAll();
             List<Patient> patientList=patientDAO.getAll();
 
             Patient patient=patientList.get(0);
             Doctor doctor=doctorList.get(0);
-            patient.signOutOfDoctor(doctor);
+            patient.signToDoctor(doctor);
+
+            String [] types=new String[]{"Hemoglobina"};
+            TestOrder ord= doctor.orderTest(patient, types);
+            System.out.println(ord);
 
         }
         catch (SQLException e)
