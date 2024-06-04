@@ -13,6 +13,10 @@ public class Doctor {
 	private List<Patient> patients;
 	private Speciality speciality;
 
+	public void setDoctorDAO(DoctorDAO doctorDAO) {
+		this.doctorDAO = doctorDAO;
+	}
+
 	private DoctorDAO doctorDAO;
 
 	public Doctor (DoctorDAO doctorDAO)

@@ -3,6 +3,7 @@ package com.company.entities;
 import com.company.DBManagment.PatientDAO;
 import com.company.exceptions.PatientNotFoundException;
 
+import javax.print.Doc;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,10 @@ public class Patient {
 	private Date birthday;
 	private List<Doctor> doctors;
 	private List<TestOrder> tests;
+
+	public void setPatientDAO(PatientDAO patientDAO) {
+		this.patientDAO = patientDAO;
+	}
 
 	private PatientDAO patientDAO;
 
@@ -160,6 +165,24 @@ public class Patient {
 		patientDAO.add(this);
 	}
 
+
+	public void signToDoctor(Doctor doctor)
+	{
+		if(!doctors.contains(doctor))
+		{
+			doctors.add(doctor);
+			update();
+		}
+	}
+
+	public void signOutOfDoctor(Doctor doctor)
+	{
+		if(doctors.contains(doctor))
+		{
+			doctors.remove(doctor);
+			update();
+		}
+	}
 
 
 }

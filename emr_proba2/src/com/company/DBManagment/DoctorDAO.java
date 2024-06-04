@@ -10,6 +10,11 @@ public interface DoctorDAO {
     List<Doctor> getAll();
     void add(Doctor doctor);
     void update(Doctor doctor);
+
+    /**
+     * Deletes doctor and all his links to patients
+     * @param id
+     */
     void delete(int id);
 
 }

@@ -7,8 +7,10 @@ import com.company.entities.Patient;
 import com.company.entities.Speciality;
 import com.company.exceptions.PatientNotFoundException;
 
+import javax.print.Doc;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
 
@@ -16,12 +18,15 @@ public class Main {
         try {
             ManagerDB managerDB=new ManagerDB();
             DoctorDAO doctorDAO = new DoctorDAOImpl(managerDB);
-            int id=2;
-            String Name="Maria";
-            String Surname="Kowal";
-            Speciality speciality=Speciality.Kardiolog;
+            PatientDAO patientDAO =new PatientDAOImpl(managerDB);
 
-            Doctor doc= new Doctor(doctorDAO,id,Name, Surname, speciality);
+            List<Doctor> doctorList=doctorDAO.getAll();
+            List<Patient> patientList=patientDAO.getAll();
+
+            Patient patient=patientList.get(0);
+            Doctor doctor=doctorList.get(0);
+            patient.signOutOfDoctor(doctor);
+
         }
         catch (SQLException e)
         {

@@ -5,15 +5,18 @@ import com.company.entities.Patient;
 import com.company.entities.TestOrder;
 import com.company.exceptions.PatientNotFoundException;
 
+import javax.print.Doc;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
 public class PatientDAOImpl implements PatientDAO {
     private Connection connection;
+    private PatientDoctorDAOImpl patientDoctorDAO;
 
     public PatientDAOImpl(ManagerDB managerDB) {
         this.connection = managerDB.getConnection();
+        patientDoctorDAO= new PatientDoctorDAOImpl(managerDB);
     }
 
     @Override
@@ -30,9 +33,10 @@ public class PatientDAOImpl implements PatientDAO {
                 String surname = rs.getString("Surname");
                 String phoneNumber = rs.getString("PhoneNumber");
                 Date birthday = rs.getDate("Birthday");
-                List<Doctor> doctors=new ArrayList<>();;
                 List<TestOrder> tests=new ArrayList<>();;
                 patient = new Patient(PESEL, name, surname, phoneNumber, birthday);
+                patient.setPatientDAO(this);
+                List<Doctor> doctors=patientDoctorDAO.getPatientsDoctor(patient);
                 patient.setTests(tests);
                 patient.setDoctors(doctors);
             }
@@ -58,9 +62,11 @@ public class PatientDAOImpl implements PatientDAO {
                 String surname=rs.getString("Surname");
                 String phoneNumber=rs.getString("PhoneNumber");
                 Date birthday=rs.getDate("Birthday");
-                List<Doctor> doctors=new ArrayList<>();;
                 List<TestOrder> tests=new ArrayList<>();;
                 Patient patient=new Patient(PESEL, name, surname, phoneNumber, birthday);
+                patient.setPatientDAO(this);
+                List<Doctor> doctors=patientDoctorDAO.getPatientsDoctor(patient);
+
                 patient.setTests(tests);
                 patient.setDoctors(doctors);
                 patientList.add(patient);
@@ -100,13 +106,48 @@ public class PatientDAOImpl implements PatientDAO {
             pstmt.setDate(4, patient.getBirthday());
             pstmt.setString(5, patient.getPESEL());
             pstmt.executeUpdate();
+
+            List<Doctor>DBdoctorsList=patientDoctorDAO.getPatientsDoctor(patient);
+            List<Doctor>doctors=patient.getDoctors();
+
+            for(Doctor doctor: doctors)
+            {
+                if (!DBdoctorsList.contains(doctor))
+                {
+                    patientDoctorDAO.add(patient, doctor);
+                    DBdoctorsList.add(doctor);
+                }
+            }
+            for(Doctor doctor: DBdoctorsList)
+            {
+                if (!doctors.contains(doctor))
+                {
+                    patientDoctorDAO.delete(patient.getPESEL(), doctor.getId());
+                }
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Deleting a patient from DB requieres deleting all connections in PatientDoctor table as well
+     * @param PESEL
+     */
     @Override
     public void delete(String PESEL) {
+        Patient patient= getByPESEL(PESEL);
+        if (patient!=null)
+        {
+            List<Doctor> doctorList = patient.getDoctors();
+            for(Doctor doctor: doctorList)
+            {
+                patientDoctorDAO.delete(PESEL, doctor.getId());
+            }
+        }
+
 
         String query="Delete from Patient where PESEL= ?";
         try {

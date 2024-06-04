@@ -5,15 +5,18 @@ import com.company.entities.Patient;
 import com.company.entities.Speciality;
 import com.company.entities.TestOrder;
 
+import javax.print.Doc;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorDAOImpl implements DoctorDAO {
     private Connection connection;
+    private DoctorPatientDAOImpl doctorPatientDAO;
     public DoctorDAOImpl(ManagerDB managerDB)
     {
         this.connection=managerDB.getConnection();
+        doctorPatientDAO=new DoctorPatientDAOImpl(managerDB);
     }
 
     @Override
@@ -29,10 +32,13 @@ public class DoctorDAOImpl implements DoctorDAO {
                 String name = rs.getString("Name");
                 String surname = rs.getString("Surname");
                // List<Patient> patientList = new ArrayList<>();
-                String specialityString=rs.getString("Speciality");
-                Speciality speciality=Speciality.valueOf(specialityString);
+                int specialityId=rs.getInt("Speciality");
+                Speciality speciality=Speciality.fromValue(specialityId);
               //  doctor=new Doctor(id, name, surname, patientList, speciality);
                 doctor=new Doctor(id, name, surname, speciality);
+                doctor.setDoctorDAO(this);
+                List<Patient> patientList = doctorPatientDAO.getDoctorsPatients(doctor);
+                doctor.setPatients(patientList);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,10 +59,13 @@ public class DoctorDAOImpl implements DoctorDAO {
                 String name=rs.getString("Name");
                 String surname=rs.getString("Surname");
               //  List<Patient> patientList = new ArrayList<>();
-                String specialityString=rs.getString("Speciality");
-                Speciality speciality=Speciality.valueOf(specialityString);
+                int specialityId=rs.getInt("Speciality");
+                Speciality speciality=Speciality.fromValue(specialityId);
               //  Doctor doctor=new Doctor(id, name, surname, patientList , speciality);
                 Doctor doctor=new Doctor(id, name, surname , speciality);
+                doctor.setDoctorDAO(this);
+                List<Patient> patientList = doctorPatientDAO.getDoctorsPatients(doctor);
+                doctor.setPatients(patientList);
                 doctorList.add(doctor);
             }
         }
@@ -91,13 +100,45 @@ public class DoctorDAOImpl implements DoctorDAO {
             pstmt.setInt(3,doctor.getSpeciality().getValue());
             pstmt.setInt(4, doctor.getId());
             pstmt.executeUpdate();
+
+            List<Patient> DBpatienstList=doctorPatientDAO.getDoctorsPatients(doctor);
+            List<Patient> patientList = doctor.getPatients();
+            for(Patient patient: patientList)
+            {
+                if(!DBpatienstList.contains(patient))
+                {
+                    doctorPatientDAO.add(patient, doctor);
+                    DBpatienstList.add(patient);
+                }
+            }
+            for(Patient patient: DBpatienstList)
+            {
+                if(!patientList.contains(patient))
+                {
+                    doctorPatientDAO.delete(patient.getPESEL(), doctor.getId());
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
 
     @Override
     public void delete(int id) {
+
+        Doctor doctor= getById(id);
+        if (doctor!=null)
+        {
+            List<Patient> patientList = doctor.getPatients();
+            for(Patient patient: patientList)
+            {
+                doctorPatientDAO.delete(patient.getPESEL(), id);
+            }
+        }
+
         String query="Delete from Doctor where Id= ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
