@@ -33,8 +33,9 @@ public class PatientDAOImpl implements PatientDAO {
                 String surname = rs.getString("Surname");
                 String phoneNumber = rs.getString("PhoneNumber");
                 Date birthday = rs.getDate("Birthday");
+                String password=rs.getString("Passsword");
                 List<TestOrder> tests=new ArrayList<>();;
-                patient = new Patient(PESEL, name, surname, phoneNumber, birthday);
+                patient = new Patient(PESEL, name, surname, phoneNumber, birthday, password);
                 patient.setPatientDAO(this);
                 List<Doctor> doctors=patientDoctorDAO.getPatientsDoctor(patient);
                 patient.setTests(tests);
@@ -62,8 +63,9 @@ public class PatientDAOImpl implements PatientDAO {
                 String surname=rs.getString("Surname");
                 String phoneNumber=rs.getString("PhoneNumber");
                 Date birthday=rs.getDate("Birthday");
+                String password=rs.getString("Passsword");
                 List<TestOrder> tests=new ArrayList<>();;
-                Patient patient=new Patient(PESEL, name, surname, phoneNumber, birthday);
+                Patient patient=new Patient(PESEL, name, surname, phoneNumber, birthday, password);
                 patient.setPatientDAO(this);
                 List<Doctor> doctors=patientDoctorDAO.getPatientsDoctor(patient);
 
@@ -83,13 +85,14 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public void add(Patient patient) {
-        String query = "INSERT INTO patient (PESEL, Name, Surname, PhoneNumber, Birthday) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO patient (PESEL, Name, Surname, PhoneNumber, Birthday, Passsword) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, patient.getPESEL());
             pstmt.setString(2, patient.getName());
             pstmt.setString(3, patient.getSurname());
             pstmt.setString(4, patient.getPhoneNumber());
             pstmt.setDate(5, patient.getBirthday());
+            pstmt.setString(6, patient.getPassword());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,13 +101,14 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public void update(Patient patient) {
-        String query = "UPDATE patient SET Name = ?, Surname = ?, PhoneNumber = ?, Birthday = ? WHERE PESEL = ?";
+        String query = "UPDATE patient SET Name = ?, Surname = ?, PhoneNumber = ?, Birthday = ?,Passsword=?  WHERE PESEL = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, patient.getName());
             pstmt.setString(2, patient.getSurname());
             pstmt.setString(3, patient.getPhoneNumber());
             pstmt.setDate(4, patient.getBirthday());
-            pstmt.setString(5, patient.getPESEL());
+            pstmt.setString(5, patient.getPassword());
+            pstmt.setString(6, patient.getPESEL());
             pstmt.executeUpdate();
 
             List<Doctor>DBdoctorsList=patientDoctorDAO.getPatientsDoctor(patient);

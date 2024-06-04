@@ -1,14 +1,10 @@
 package com.company.entities;
 
-import com.company.entities.TestFactory;
-import com.company.entities.TestHemoglobina;
-import com.company.entities.TestResult;
-
-
 public class TestHemoglobinaFactory implements TestFactory {
     @Override
-    public TestResult createTestResult() {
-        TestResult result = new TestHemoglobina();
+    public TestResult createTestResult(int order) {
+        TestResult result = new TestHemoglobina(order);
+        result.addToDB();
         return result;
     }
 

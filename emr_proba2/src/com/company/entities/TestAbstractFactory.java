@@ -3,24 +3,30 @@ package com.company.entities;
 public class TestAbstractFactory {
     TestResult testResult;
 
-    TestResult createTestResult(TestTyp testTyp)
+    public TestResult createTestResult(int order,TestTyp testTyp)
     {
         switch (testTyp)
         {
             case Hemoglobina -> {
-                testResult=new TestHemoglobinaFactory().createTestResult();
+                testResult=new TestHemoglobinaFactory().createTestResult(order);
                 break;
             }
             case CisnienieSkurczowe -> {
-                testResult=new TestCisnienieFactory().createTestResult();
+                testResult=new TestCisnienieSkurczoweFactory().createTestResult(order);
                 break;
             }
+
+            case CisnienieRozkurczowe -> {
+                testResult=new TestCisnienieRozkurczoweFactory().createTestResult(order);
+                break;
+            }
+
         }
 
         return testResult;
     }
 
-    void setGranice(TestTyp testTyp, float down, float up)
+    public void setGranice(TestTyp testTyp, float down, float up)
     {
         switch (testTyp)
         {
@@ -29,7 +35,11 @@ public class TestAbstractFactory {
                 break;
             }
             case CisnienieSkurczowe -> {
-                new TestCisnienieFactory().setGranice(down, up);
+                new TestCisnienieSkurczoweFactory().setGranice(down, up);
+                break;
+            }
+            case CisnienieRozkurczowe -> {
+                new TestCisnienieRozkurczoweFactory().setGranice(down, up);
                 break;
             }
         }

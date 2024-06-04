@@ -9,6 +9,11 @@ public class TestHemoglobina extends TestResult {
 	private static float wartoscGorna;
 
 
+	public TestHemoglobina(int order)
+	{
+		super(order, TestTyp.Hemoglobina);
+	}
+
 	public TestHemoglobina()
 	{
 		this(Date.valueOf("2023-09-02"));
@@ -48,9 +53,21 @@ public class TestHemoglobina extends TestResult {
 	}
 
 	@Override
-	void create() {
-		new TestHemoglobina();
+	void create(int order) {
+		new TestHemoglobina(order);
 	}
+
+	@Override
+	public void setValue(Number value) {
+		setWartosc(value.floatValue());
+
+	}
+
+	@Override
+	public Number getValue() {
+		return wartosc;
+	}
+
 
 	public static float getWartoscDolna() {
 		return wartoscDolna;

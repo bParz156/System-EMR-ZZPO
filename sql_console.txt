@@ -1,17 +1,14 @@
-CREATE TABLE Patient (PESEL varchar(11) NOT NULL, Name varchar(255), Surname varchar(255), PhoneNumber varchar(9), Birthday date, PRIMARY KEY (PESEL));
-CREATE TABLE Doctor (Id SERIAL NOT NULL, Name varchar(255) NOT NULL, Surname varchar(255) NOT NULL, Speciality int4 NOT NULL, PRIMARY KEY (Id));
-CREATE TABLE Speciality (ID SERIAL NOT NULL, name varchar(50) NOT NULL, PRIMARY KEY (ID));
-CREATE TABLE TestOrder (Id SERIAL NOT NULL, OrderDate date NOT NULL, Doctor int4 NOT NULL, Patient varchar(11) NOT NULL, PRIMARY KEY (Id));
-CREATE TABLE TestResult (Id SERIAL NOT NULL, TestOrder int4 NOT NULL, ResultDate date NOT NULL, Name varchar(255) NOT NULL, result_value float4 NOT NULL, typ int4 NOT NULL, PRIMARY KEY (Id));
-CREATE TABLE TestWzorzec (ID SERIAL NOT NULL, name varchar(50) NOT NULL, DolnaGranica float4 NOT NULL, GornaGranica float4 NOT NULL, PRIMARY KEY (ID));
+CREATE TABLE Doctor (Id int4 NOT NULL AUTO_INCREMENT, Name varchar(255) NOT NULL, Surname varchar(255) NOT NULL, Speciality int4 NOT NULL, Passsword VARCHAR(50) NOT NULL, PRIMARY KEY (Id));
+CREATE TABLE Patient (PESEL varchar(11) NOT NULL, Name varchar(255) NOT NULL, Surname varchar(255) NOT NULL, PhoneNumber varchar(9) NOT NULL, Birthday date NOT NULL,Passsword VARCHAR(50) NOT NULL, PRIMARY KEY (PESEL));
 CREATE TABLE Patient_Doctor (PatientPESEL varchar(11) NOT NULL, DoctorId int4 NOT NULL, PRIMARY KEY (PatientPESEL, DoctorId));
+CREATE TABLE Speciality (ID int4 NOT NULL, name varchar(50) NOT NULL, PRIMARY KEY (ID));
+CREATE TABLE TestOrder (Id int4 NOT NULL AUTO_INCREMENT, OrderDate timestamp NOT NULL, Doctor int4 NOT NULL, Patient varchar(11) NOT NULL, PRIMARY KEY (Id));
+CREATE TABLE TestResult (Id int4 NOT NULL AUTO_INCREMENT, TestOrder int4 NOT NULL, ResultDate timestamp NOT NULL, ResultValue float4 NOT NULL, typ int4 NOT NULL, PRIMARY KEY (Id));
+CREATE TABLE TestWzorzec (ID int4 NOT NULL, name varchar(50) NOT NULL, DolnaGranica float4 NOT NULL, GornaGranica float4 NOT NULL, PRIMARY KEY (ID));
 ALTER TABLE Patient_Doctor ADD CONSTRAINT FKPatient_Do234578 FOREIGN KEY (PatientPESEL) REFERENCES Patient (PESEL);
 ALTER TABLE Patient_Doctor ADD CONSTRAINT FKPatient_Do838137 FOREIGN KEY (DoctorId) REFERENCES Doctor (Id);
 ALTER TABLE TestOrder ADD CONSTRAINT FKTestOrder470804 FOREIGN KEY (Patient) REFERENCES Patient (PESEL);
 ALTER TABLE TestOrder ADD CONSTRAINT FKTestOrder759135 FOREIGN KEY (Doctor) REFERENCES Doctor (Id);
 ALTER TABLE TestResult ADD CONSTRAINT FKTestResult826315 FOREIGN KEY (TestOrder) REFERENCES TestOrder (Id);
 ALTER TABLE Doctor ADD CONSTRAINT FKDoctor584439 FOREIGN KEY (Speciality) REFERENCES Speciality (ID);
-ALTER TABLE TestResult ADD CONSTRAINT FKTestResult775934 FOREIGN KEY (typ) REFERENCES TestWzorzec (ID);
-
-
-
+ALTER TABLE TestResult ADD CONSTRAINT FKTestResult236209 FOREIGN KEY (typ) REFERENCES TestWzorzec (ID);

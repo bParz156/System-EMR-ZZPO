@@ -37,10 +37,10 @@ public class TestResultDAOImpl implements  TestResultDAO{
     }
 
     @Override
-    public void add(TestResult result, TestOrder testOrder) {
+    public void add(TestResult result) {
         String query = "INSERT INTO TestResult (TestOrder, ResultDate, ResultValue, typ) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, testOrder.getId());
+            pstmt.setInt(1, result.getOrder());
             pstmt.setDate(2, result.getResultDate());
             pstmt.setFloat(3, -1);
             pstmt.setInt(4, result.testTyp().getValue());
@@ -58,6 +58,15 @@ public class TestResultDAOImpl implements  TestResultDAO{
 
     @Override
     public void update(TestResult result) {
+        String query = "Update  TestResult SET  ResultDate=?, ResultValue=?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setDate(2, result.getResultDate());
+            pstmt.setFloat(3, result.getValue().floatValue());
+            pstmt.setInt(4, result.testTyp().getValue());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -72,8 +81,7 @@ public class TestResultDAOImpl implements  TestResultDAO{
 
                 float down=rs.getFloat("DolnaGranica");
                 float up= rs.getFloat("GornaGranica");
-
-
+                new TestAbstractFactory().setGranice(typ, down, up);
             }
         } catch (SQLException e) {
             e.printStackTrace();

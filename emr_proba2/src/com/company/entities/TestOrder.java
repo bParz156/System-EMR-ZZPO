@@ -106,6 +106,14 @@ public class TestOrder {
 		TestOrder order=new TestOrder(-1, date, doctor, patient);
 		int id=addToDB(order);
 		order.setId(id);
+		TestAbstractFactory testAbstractFactory= new TestAbstractFactory();
+		List<TestResult> testResults=new ArrayList<>();
+		for(TestTyp type : types)
+		{
+			TestResult result= testAbstractFactory.createTestResult(id, type);
+			testResults.add(result);
+		}
+		order.setResults(testResults);
 
 		return order;
 	}

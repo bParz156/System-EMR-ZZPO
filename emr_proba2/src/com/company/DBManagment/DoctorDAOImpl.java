@@ -79,11 +79,12 @@ public class DoctorDAOImpl implements DoctorDAO {
 
     @Override
     public void add(Doctor doctor) {
-        String query = "INSERT INTO Doctor (Name, Surname, Speciality) values (?,?,?)";
+        String query = "INSERT INTO Doctor (Name, Surname, Speciality, Passsword) values (?,?,?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, doctor.getName());
             pstmt.setString(2, doctor.getSurname());
             pstmt.setInt(3,doctor.getSpeciality().getValue());
+            pstmt.setString(4, "as");
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

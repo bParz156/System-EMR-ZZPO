@@ -25,6 +25,9 @@ public class Main {
             TestOrder.setTestOrderDAO(testOrderDAO);
             Patient.setPatientDAO(patientDAO);
 
+          //  Patient patient= new Patient("18987654321","Maciek", "Adamowicz", "123456789", Date.valueOf("2004-09-03"),"Kotem", patientDAO);
+          //  Doctor doctor= new Doctor(1, "Kasia", "Zapala", Speciality.Kardiolog, doctorDAO);
+
             List<Doctor> doctorList=doctorDAO.getAll();
             List<Patient> patientList=patientDAO.getAll();
 
@@ -32,7 +35,7 @@ public class Main {
             Doctor doctor=doctorList.get(0);
             patient.signToDoctor(doctor);
 
-            String [] types=new String[]{"Hemoglobina"};
+            String [] types=new String[]{"Hemoglobina", "CisnienieSkurczowe"};
             TestOrder ord= doctor.orderTest(patient, types);
             System.out.println(ord);
 

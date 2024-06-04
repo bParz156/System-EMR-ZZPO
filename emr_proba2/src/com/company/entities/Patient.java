@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Patient {
+public class Patient extends User {
 
 	private String PESEL;
 	private String name;
@@ -23,6 +23,8 @@ public class Patient {
 	public static void setPatientDAO(PatientDAO patientDAO) {
 		Patient.patientDAO = patientDAO;
 	}
+
+
 
 
 	@Override
@@ -107,8 +109,8 @@ public class Patient {
 	 * @param phoneNumber
 	 * @param birthday
 	 */
-	public Patient(String PESEL, String name, String surname, String phoneNumber, Date birthday, PatientDAO patientDAO) {
-		this(PESEL, name, surname, phoneNumber,birthday);
+	public Patient(String PESEL, String name, String surname, String phoneNumber, Date birthday, String password, PatientDAO patientDAO) {
+		this(PESEL, name, surname, phoneNumber,birthday, password);
 		this.patientDAO = patientDAO;
 		try{
 			if (patientDAO.getByPESEL(PESEL)==null)
@@ -129,7 +131,15 @@ public class Patient {
 		this.surname=surname;
 		this.phoneNumber=phoneNumber;
 		this.birthday=birthday;
+	}
 
+	public Patient(String PESEL, String name, String surname, String phoneNumber, Date birthday, String password) {
+		this.PESEL=PESEL;
+		this.name=name;
+		this.surname=surname;
+		this.phoneNumber=phoneNumber;
+		this.birthday=birthday;
+		setCredetianls(PESEL, password);
 	}
 
 
