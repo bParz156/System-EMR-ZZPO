@@ -21,8 +21,9 @@ public class TestAbstractFactory {
                 break;
             }
 
-        }
 
+        }
+        testResult.addToDB();
         return testResult;
     }
 

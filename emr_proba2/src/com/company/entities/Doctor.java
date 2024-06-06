@@ -101,7 +101,6 @@ public class Doctor {
 	public TestOrder orderTest(Patient patient, String [] testTypes) {
 		long millis=System.currentTimeMillis();
 		Date date=new Date(millis);
-		//Date date=Date.valueOf("2024-06-04");
 		int n=testTypes.length;
 		TestTyp[] types=new TestTyp[n];
 		for(int i=0; i<n; i++)

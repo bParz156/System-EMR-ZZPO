@@ -4,6 +4,7 @@ public abstract class User {
 
     private String login;
     private String password;
+    UserRole userRole;
 
     void setCredetianls(String login, String password)
     {
@@ -24,4 +25,10 @@ public abstract class User {
     public String getPassword() {
         return password;
     }
+
+    public UserRole getUserRole()
+    {
+        return userRole;
+    }
+
 }

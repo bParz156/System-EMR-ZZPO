@@ -4,7 +4,6 @@ public class TestHemoglobinaFactory implements TestFactory {
     @Override
     public TestResult createTestResult(int order) {
         TestResult result = new TestHemoglobina(order);
-        result.addToDB();
         return result;
     }
 
