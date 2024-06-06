@@ -34,10 +34,10 @@ public class PatientDAOImpl implements PatientDAO {
                 String phoneNumber = rs.getString("PhoneNumber");
                 Date birthday = rs.getDate("Birthday");
                 String password=rs.getString("Passsword");
-                List<TestOrder> tests=new ArrayList<>();;
                 patient = new Patient(PESEL, name, surname, phoneNumber, birthday, password);
                 patient.setPatientDAO(this);
                 List<Doctor> doctors=patientDoctorDAO.getPatientsDoctor(patient);
+                List<TestOrder> tests=TestOrder.getPatientsTestOrders(patient);
                 patient.setTests(tests);
                 patient.setDoctors(doctors);
             }
@@ -64,11 +64,11 @@ public class PatientDAOImpl implements PatientDAO {
                 String phoneNumber=rs.getString("PhoneNumber");
                 Date birthday=rs.getDate("Birthday");
                 String password=rs.getString("Passsword");
-                List<TestOrder> tests=new ArrayList<>();;
                 Patient patient=new Patient(PESEL, name, surname, phoneNumber, birthday, password);
+
                 patient.setPatientDAO(this);
                 List<Doctor> doctors=patientDoctorDAO.getPatientsDoctor(patient);
-
+                List<TestOrder> tests=TestOrder.getPatientsTestOrders(patient);
                 patient.setTests(tests);
                 patient.setDoctors(doctors);
                 patientList.add(patient);

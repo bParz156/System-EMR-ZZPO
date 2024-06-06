@@ -13,6 +13,7 @@ public interface TestResultDAO {
     void add(TestResult result);
     void delete(int id);
     void update(TestResult result);
+    List<TestResult> getByOrder(TestOrder testOrder);
 
 
 }

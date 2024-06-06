@@ -3,6 +3,7 @@ package com.company.DBManagment;
 import com.company.entities.Doctor;
 import com.company.entities.Patient;
 import com.company.entities.TestOrder;
+import com.company.entities.TestResult;
 
 import java.sql.*;
 import java.sql.Date;
@@ -42,17 +43,20 @@ public class TestOrderDAOImpl implements  TestOrderDAO{
     public List<TestOrder> getByPatient(Patient patient) {
         List<TestOrder> testOrders=new ArrayList<>();
         String PESEL=patient.getPESEL();
-        String query="Select * from TestOrder where Patient= ?";
+        String query="Select * from testorder where Patient= "+PESEL;//?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, PESEL);
+           // stmt.setString(1, PESEL);
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next())
             {
                 int id=rs.getInt("Id");
                 Date orderDate=rs.getDate("OrderDate");
                 int doctorId=rs.getInt("Doctor");
-                testOrders.add(new TestOrder(id, orderDate,Doctor.getDoctor(doctorId), patient ));
+                TestOrder order=new TestOrder(id, orderDate,Doctor.getDoctor(doctorId), patient );
+                List<TestResult> results=TestResult.getResultsOfOrder(order);
+                order.setResults(results);
+                testOrders.add(order);
 
             }
         } catch (SQLException e) {
@@ -74,7 +78,10 @@ public class TestOrderDAOImpl implements  TestOrderDAO{
                 int id=rs.getInt("Id");
                 Date orderDate=rs.getDate("OrderDate");
                 String PESEL=rs.getString("Patient");
-                testOrders.add(new TestOrder(id, orderDate,doctor, Patient.getPatient(PESEL) ));
+                TestOrder order=new TestOrder(id, orderDate,doctor, Patient.getPatient(PESEL));
+                List<TestResult> results=TestResult.getResultsOfOrder(order);
+                order.setResults(results);
+                testOrders.add(order);
 
             }
         } catch (SQLException e) {
@@ -96,7 +103,10 @@ public class TestOrderDAOImpl implements  TestOrderDAO{
             {
                 int id=rs.getInt("Id");
                 Date orderDate=rs.getDate("OrderDate");
-                testOrders.add(new TestOrder(id, orderDate,doctor, patient ));
+                TestOrder order=new TestOrder(id, orderDate,doctor, patient);
+                List<TestResult> results=TestResult.getResultsOfOrder(order);
+                order.setResults(results);
+                testOrders.add(order);
 
             }
         } catch (SQLException e) {

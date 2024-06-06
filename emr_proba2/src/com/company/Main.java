@@ -34,13 +34,24 @@ public class Main {
 
             Patient patient=patientList.get(1);
             Doctor doctor=doctorList.get(0);
-            patient.signToDoctor(doctor);
-            String [] types=new String[]{"CisnienieRozkurczowe", "CisnienieSkurczowe"};
-            TestOrder ord= doctor.orderTest(patient, types);
+//            patient.signToDoctor(doctor);
+//            String [] types=new String[]{"CisnienieRozkurczowe", "CisnienieSkurczowe"};
+//            TestOrder ord= doctor.orderTest(patient, types);
+//
+//            List<TestResult>results = ord.getResults();
+//            for (TestResult res : results)
+//                System.out.println(res);
 
-            List<TestResult>results = ord.getResults();
-            for (TestResult res : results)
-                System.out.println(res);
+            List<TestOrder> orders= patient.getTests();
+            for (TestOrder order : orders)
+            {
+                List<TestResult> results=order.getResults();
+                    if (results!=null) {
+                        for (TestResult testResult : results) {
+                            System.out.println(testResult.getResult());
+                        }
+                }
+            }
 
         }
         catch (SQLException e)

@@ -3,6 +3,8 @@ package com.company.DBManagment;
 import com.company.entities.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestResultDAOImpl implements  TestResultDAO{
 
@@ -27,6 +29,11 @@ public class TestResultDAOImpl implements  TestResultDAO{
                 Date date=rs.getDate("ResultDate");
                 int type= rs.getInt("typ");
                 TestTyp testTyp=TestTyp.fromValue(type);
+                int order =rs.getInt("TestOrder");
+                Number value= rs.getFloat("ResultValue");
+                testResult=new TestAbstractFactory().createTestResult(order, testTyp, false);
+                testResult.setValue(value);
+                testResult.setResultDate(date);
 
             }
 
@@ -71,6 +78,31 @@ public class TestResultDAOImpl implements  TestResultDAO{
     }
 
     @Override
+    public List<TestResult> getByOrder(TestOrder testOrder) {
+        List<TestResult> testResults=new ArrayList<>();
+        int order=testOrder.getId();
+        String query="Select * from TestResult where TestOrder= "+order;
+        try {
+            PreparedStatement stmt=connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                Date date=rs.getDate("ResultDate");
+                int type= rs.getInt("typ");
+                TestTyp testTyp=TestTyp.fromValue(type);
+                Number value= rs.getFloat("ResultValue");
+                TestResult testResult=new TestAbstractFactory().createTestResult(order, testTyp, false);
+                testResult.setValue(value);
+                testResult.setResultDate(date);
+                testResults.add(testResult);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return testResults;
+    }
+
+    @Override
     public void setGranice(TestTyp typ) {
         String query="Select * from TestWzorzec where ID=?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -87,6 +119,6 @@ public class TestResultDAOImpl implements  TestResultDAO{
             e.printStackTrace();
         }
 
-    };
+    }
 
 }

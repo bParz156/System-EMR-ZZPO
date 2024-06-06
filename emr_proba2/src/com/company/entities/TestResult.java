@@ -3,6 +3,7 @@ package com.company.entities;
 import com.company.DBManagment.TestResultDAO;
 
 import java.sql.Date;
+import java.util.List;
 
 public abstract class TestResult {
 
@@ -88,5 +89,10 @@ public abstract class TestResult {
 	private void update()
 	{
 		testResultDAO.update(this);
+	}
+
+	static public List<TestResult> getResultsOfOrder(TestOrder order)
+	{
+		return testResultDAO.getByOrder(order);
 	}
 }

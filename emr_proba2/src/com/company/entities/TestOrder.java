@@ -110,7 +110,7 @@ public class TestOrder {
 		List<TestResult> testResults=new ArrayList<>();
 		for(TestTyp type : types)
 		{
-			TestResult result= testAbstractFactory.createTestResult(id, type);
+			TestResult result= testAbstractFactory.createTestResult(id, type, true);
 			testResults.add(result);
 		}
 		order.setResults(testResults);

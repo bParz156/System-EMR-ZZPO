@@ -3,7 +3,14 @@ package com.company.entities;
 public class TestAbstractFactory {
     TestResult testResult;
 
-    public TestResult createTestResult(int order,TestTyp testTyp)
+    /**
+     *
+     * @param order
+     * @param testTyp
+     * @param withAdd W przyapdku tworzenia i dodawania do bazu - True, jesli tylko czytam z bazy to False
+     * @return
+     */
+    public TestResult createTestResult(int order,TestTyp testTyp,boolean withAdd)
     {
         switch (testTyp)
         {
@@ -23,7 +30,11 @@ public class TestAbstractFactory {
 
 
         }
-        testResult.addToDB();
+        if (withAdd)
+        {
+            testResult.addToDB();
+        }
+
         return testResult;
     }
 

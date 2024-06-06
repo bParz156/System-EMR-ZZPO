@@ -167,6 +167,7 @@ public class Patient extends User {
 		patientDAO.update(this);
 	}
 
+
 	private void addToDB() {
 		patientDAO.add(this);
 	}
