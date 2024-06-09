@@ -4,6 +4,7 @@ import com.company.DBManagment.DoctorDAO;
 import com.company.exceptions.NotAccessiblePatientException;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -148,7 +149,19 @@ public class Doctor {
 
 	public List<TestResult> resultsToFill()
 	{
-		return null;
+		List<TestOrder> orders = TestOrder.getDoctorsOrders(this);
+		List<TestResult> resultList=new ArrayList<>();
+		for (TestOrder order : orders)
+		{
+			List<TestResult> results=order.getResults();
+			for(TestResult result: results)
+			{
+				if (result.getValue().intValue()<0)
+					resultList.add(result);
+			}
+
+		}
+		return  resultList;
 	}
 
 }

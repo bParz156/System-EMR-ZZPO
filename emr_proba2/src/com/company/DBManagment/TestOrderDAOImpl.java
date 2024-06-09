@@ -68,10 +68,10 @@ public class TestOrderDAOImpl implements  TestOrderDAO{
     @Override
     public List<TestOrder> getByDoctor(Doctor doctor) {
         List<TestOrder> testOrders=new ArrayList<>();
-        String query="Select * from TestOrder where Doctor= ?";
+        int Did=doctor.getId();
+        String query="Select * from TestOrder where Doctor="+Did;
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, doctor.getId());
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next())
             {

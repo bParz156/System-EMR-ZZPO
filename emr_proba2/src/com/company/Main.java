@@ -33,25 +33,17 @@ public class Main {
 
             Patient patient=patientList.get(1);
             System.out.println(patient);
-            Doctor doctor=doctorList.get(1);
-            try {
-                doctor.fillResult(3, 9);
-            }
-            catch (NotAccessiblePatientException e)
-            {
-                System.out.println(e.getMessage());
-            }
-//            patient.signToDoctor(doctor);
-//            String [] types=new String[]{"CisnienieRozkurczowe", "CisnienieSkurczowe"};
-//            TestOrder ord= doctor.orderTest(patient, types);
-//
-//            List<TestResult>results = ord.getResults();
-//            for (TestResult res : results)
-//                System.out.println(res);
-
+            Doctor doctor=doctorList.get(0);
             List<TestResult> res= patient.getResults();
             for (TestResult testResult : res) {
                             System.out.println(testResult.getResult());
+            }
+
+            System.out.println("\n");
+
+            res= doctor.resultsToFill();
+            for (TestResult testResult : res) {
+                System.out.println(testResult.getResult());
             }
 
         }

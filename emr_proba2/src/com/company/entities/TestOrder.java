@@ -129,5 +129,10 @@ public class TestOrder {
 		return testOrderDAO.getById(id);
 	}
 
+	public static List<TestOrder> getDoctorsOrders(Doctor doctor)
+	{
+		return testOrderDAO.getByDoctor(doctor);
+	}
+
 
 }
