@@ -40,6 +40,11 @@ public class Doctor extends User {
 		}
 	}
 
+	public Doctor(int id, String name, String surname, Speciality speciality, DoctorDAO doctorDAO, String password) {
+		this(id, name, surname, speciality, doctorDAO);
+		setCredetianls(name+"."+surname, password);
+	}
+
 
 
 	public int getId() {
@@ -163,5 +168,40 @@ public class Doctor extends User {
 		}
 		return  resultList;
 	}
+
+
+	public static List<Doctor> getAll()
+	{
+		return doctorDAO.getAll();
+	}
+
+	private void managePatient(Patient patient, boolean add)
+	{
+		if(add)
+		{
+			if(!patients.contains(patient))
+			{
+				patients.add(patient);
+			}
+		}
+		else
+		{
+			if(patients.contains(patient))
+			{
+				patients.remove(patient);
+			}
+		}
+	}
+
+	public void addPatient(Patient patient)
+	{
+		managePatient(patient, true);
+	}
+
+	public void deletePatient(Patient patient)
+	{
+		managePatient(patient, false);
+	}
+
 
 }

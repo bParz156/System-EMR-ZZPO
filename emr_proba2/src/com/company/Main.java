@@ -28,23 +28,39 @@ public class Main {
           //  Patient patient= new Patient("18987654321","Maciek", "Adamowicz", "123456789", Date.valueOf("2004-09-03"),"Kotem", patientDAO);
           //  Doctor doctor= new Doctor(1, "Kasia", "Zapala", Speciality.Kardiolog, doctorDAO);
 
-            List<Doctor> doctorList=doctorDAO.getAll();
+            List<Doctor> doctorList=Doctor.getAll();
             List<Patient> patientList=patientDAO.getAll();
 
+//            for(Doctor doctor: doctorList)
+//            {
+//                System.out.println(doctor.getPatients());
+//            }
+
+
             Patient patient=patientList.get(1);
-            System.out.println(patient);
-            Doctor doctor=doctorList.get(0);
-            List<TestResult> res= patient.getResults();
-            for (TestResult testResult : res) {
-                            System.out.println(testResult.getResult());
-            }
+            Doctor doctor=doctorList.get(1);
+//            System.out.println("Przed");
+//            System.out.println(doctor.getPatients());
+//            patient.signToDoctor(doctor);
+//            System.out.println("Po");
+//            System.out.println(doctor.getPatients());
+//            System.out.println("Pacjent");
+//            System.out.println(patient.getDoctors());
 
-            System.out.println("\n");
 
-            res= doctor.resultsToFill();
-            for (TestResult testResult : res) {
-                System.out.println(testResult.getResult());
-            }
+
+
+//            List<TestResult> res= patient.getResults();
+//            for (TestResult testResult : res) {
+//                            System.out.println(testResult.getResult());
+//            }
+//
+//            System.out.println("\n");
+//
+//            res= doctor.resultsToFill();
+//            for (TestResult testResult : res) {
+//                System.out.println(testResult.getResult());
+//            }
 
         }
         catch (SQLException e)

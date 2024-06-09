@@ -189,6 +189,7 @@ public class Patient extends User {
 			doctors.add(doctor);
 			update();
 		}
+		doctor.addPatient(this);
 	}
 
 	public void signOutOfDoctor(Doctor doctor)
@@ -198,6 +199,7 @@ public class Patient extends User {
 			doctors.remove(doctor);
 			update();
 		}
+		doctor.deletePatient(this);
 	}
 
 
