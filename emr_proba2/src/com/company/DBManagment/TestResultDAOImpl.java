@@ -31,9 +31,7 @@ public class TestResultDAOImpl implements  TestResultDAO{
                 TestTyp testTyp=TestTyp.fromValue(type);
                 int order =rs.getInt("TestOrder");
                 Number value= rs.getFloat("ResultValue");
-                testResult=new TestAbstractFactory().createTestResult(order, testTyp, false);
-                testResult.setValue(value);
-                testResult.setResultDate(date);
+                testResult=new TestAbstractFactory().readTestResult(id, order, testTyp,  value,  date);
 
             }
 
@@ -65,11 +63,11 @@ public class TestResultDAOImpl implements  TestResultDAO{
 
     @Override
     public void update(TestResult result) {
-        String query = "Update  TestResult SET  ResultDate=?, ResultValue=?";
+        String query = "Update  TestResult SET  ResultDate=?, ResultValue=? where id=?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setDate(2, result.getResultDate());
-            pstmt.setFloat(3, result.getValue().floatValue());
-            pstmt.setInt(4, result.testTyp().getValue());
+            pstmt.setDate(1, result.getResultDate());
+            pstmt.setFloat(2, result.getValue().floatValue());
+            pstmt.setInt(3, result.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,19 +85,27 @@ public class TestResultDAOImpl implements  TestResultDAO{
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
+                int id= rs.getInt("Id");
                 Date date=rs.getDate("ResultDate");
                 int type= rs.getInt("typ");
                 TestTyp testTyp=TestTyp.fromValue(type);
                 Number value= rs.getFloat("ResultValue");
-                TestResult testResult=new TestAbstractFactory().createTestResult(order, testTyp, false);
-                testResult.setValue(value);
-                testResult.setResultDate(date);
+                TestResult testResult=new TestAbstractFactory().readTestResult(id, order, testTyp,  value,  date);
                 testResults.add(testResult);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return testResults;
+    }
+
+    @Override
+    public void setGraniceAll() {
+        TestTyp [] all=TestTyp.values();
+        for(TestTyp typ : all)
+        {
+            setGranice(typ);
+        }
     }
 
     @Override

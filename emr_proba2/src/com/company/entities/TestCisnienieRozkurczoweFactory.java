@@ -1,5 +1,7 @@
 package com.company.entities;
 
+import java.sql.Date;
+
 public class TestCisnienieRozkurczoweFactory implements TestFactory {
     @Override
     public TestResult createTestResult(int order) {
@@ -12,5 +14,10 @@ public class TestCisnienieRozkurczoweFactory implements TestFactory {
         TestCisnienieRozkurczowe.setRozkurczoweDolne((int)down);
         TestCisnienieRozkurczowe.setRozkurczoweGorne((int)up);
 
+    }
+
+    @Override
+    public TestResult readTestResult(int id,int order, Number number, Date resultDate) {
+        return new TestCisnienieRozkurczowe(id, order, number.intValue(), resultDate);
     }
 }

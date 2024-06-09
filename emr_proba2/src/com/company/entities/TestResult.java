@@ -16,7 +16,9 @@ public abstract class TestResult {
 	public static  void setTestResultDAO(TestResultDAO testResultDAO)
 	{
 		TestResult.testResultDAO=testResultDAO;
+		testResultDAO.setGraniceAll();
 	}
+
 
 	public void setOrder(int order) {
 		this.order = order;
@@ -57,6 +59,8 @@ public abstract class TestResult {
 		this.testTyp = testTyp;
 	}
 
+
+
 	public TestResult(int order, TestTyp testTyp)
 	{
 		this.order=order;
@@ -86,13 +90,33 @@ public abstract class TestResult {
 		testResultDAO.add(this);
 
 	}
-	private void update()
+	void update()
 	{
 		testResultDAO.update(this);
+
 	}
 
 	static public List<TestResult> getResultsOfOrder(TestOrder order)
 	{
 		return testResultDAO.getByOrder(order);
 	}
+
+
+	static public TestResult getById(Doctor doctor, int id)
+	{
+		TestResult result= testResultDAO.getById(id);
+		if (canBeReadByADoctor(result, doctor))
+			return result;
+		return null;
+	}
+
+	private static boolean canBeReadByADoctor(TestResult result, Doctor doctor)
+	{
+		int orderId=result.getOrder();
+		TestOrder order = TestOrder.getById(orderId);
+		Patient patient= order.getPatient();
+		List<Doctor> doctorList=patient.getDoctors();
+		return (doctorList.contains(doctor));
+	}
+
 }

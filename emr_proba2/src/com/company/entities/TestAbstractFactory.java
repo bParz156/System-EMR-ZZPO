@@ -1,5 +1,7 @@
 package com.company.entities;
 
+import java.sql.Date;
+
 public class TestAbstractFactory {
     TestResult testResult;
 
@@ -55,6 +57,30 @@ public class TestAbstractFactory {
                 break;
             }
         }
+    }
+
+
+    public TestResult readTestResult(int id, int order, TestTyp testTyp, Number number, Date resultDate)
+    {
+        switch (testTyp) {
+            case Hemoglobina -> {
+                testResult = new TestHemoglobinaFactory().readTestResult(id, order, number,  resultDate);
+                break;
+            }
+            case CisnienieSkurczowe -> {
+                testResult = new TestCisnienieSkurczoweFactory().readTestResult(id, order, number,  resultDate);
+                break;
+            }
+
+            case CisnienieRozkurczowe -> {
+                testResult = new TestCisnienieRozkurczoweFactory().readTestResult(id, order, number,  resultDate);
+                break;
+            }
+
+
+        }
+
+        return testResult;
     }
 
 

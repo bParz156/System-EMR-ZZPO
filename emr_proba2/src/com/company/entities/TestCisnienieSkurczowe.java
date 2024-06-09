@@ -13,10 +13,11 @@ public class TestCisnienieSkurczowe extends TestResult {
 		super(order, TestTyp.CisnienieSkurczowe);
 	}
 
-	public TestCisnienieSkurczowe(int id, int skurczowe, Date date) {
+	public TestCisnienieSkurczowe(int id, int order, int skurczowe, Date date) {
 		super(date, TestTyp.CisnienieSkurczowe);
 		this.skurczowe = skurczowe;
 		this.id=id;
+		this.order=order;
 	}
 
 	public TestCisnienieSkurczowe(Date date)
@@ -24,11 +25,6 @@ public class TestCisnienieSkurczowe extends TestResult {
 		super(date, TestTyp.CisnienieSkurczowe);
 	}
 
-
-	public TestCisnienieSkurczowe()
-	{
-		this(Date.valueOf("2023-09-02"));
-	}
 
 
 	public static int getSkurczoweDolne() {
@@ -84,6 +80,7 @@ public class TestCisnienieSkurczowe extends TestResult {
 	@Override
 	public void setValue(Number value) {
 		setSkurczowe(value.intValue());
+		update();
 	}
 
 	@Override

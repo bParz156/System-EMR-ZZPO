@@ -143,6 +143,10 @@ public class TestOrderDAOImpl implements  TestOrderDAO{
             pstmt.setInt(2, testOrder.getDoctor().getId());
             pstmt.setString(3,testOrder.getPatient().getPESEL());
             pstmt.executeUpdate();
+            List<TestResult> results=TestResult.getResultsOfOrder(testOrder);
+            testOrder.setResults(results);
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -89,6 +89,8 @@ public class Patient extends User {
 	}
 
 	public List<TestOrder> getTests() {
+		List<TestOrder> tests= patientDAO.getTestsOrders(this);
+		setTests(tests);
 		return tests;
 	}
 
@@ -96,10 +98,6 @@ public class Patient extends User {
 		this.tests = tests;
 	}
 
-	public List<TestOrder> getTestOrders() {
-		// TODO - implement Patient.getTestOrders
-		throw new UnsupportedOperationException();
-	}
 
 	/**
 	 * 
@@ -149,8 +147,19 @@ public class Patient extends User {
 	 */
 	public List<TestResult> getResults()
 	{
-		List<TestResult> results=new ArrayList<>();
-		return results;
+		getTests();
+		List<TestResult> resultList=new ArrayList<>();
+		for (TestOrder order : tests)
+		{
+			List<TestResult> results=order.getResults();
+			for(TestResult result: results)
+			{
+				if (result.getValue().intValue()>0)
+					resultList.add(result);
+			}
+
+		}
+		return  resultList;
 	}
 
 	public String toString()
@@ -196,6 +205,7 @@ public class Patient extends User {
 	{
 		return patientDAO.getByPESEL(PESEL);
 	}
+
 
 
 }

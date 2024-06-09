@@ -14,20 +14,18 @@ public class TestHemoglobina extends TestResult {
 		super(order, TestTyp.Hemoglobina);
 	}
 
-	public TestHemoglobina()
-	{
-		this(Date.valueOf("2023-09-02"));
-	}
 
 	public TestHemoglobina(Date date)
 	{
 		super(date, TestTyp.Hemoglobina);
 	}
 
-	public TestHemoglobina(Date date, float wartosc)
+	public TestHemoglobina(int id, int order, float wartosc,Date date)
 	{
 		this(date);
 		this.wartosc=wartosc;
+		this.id=id;
+		this.order=order;
 	}
 	/**
 	 * 
@@ -35,6 +33,7 @@ public class TestHemoglobina extends TestResult {
 	 */
 	public void setWartosc(float wartosc) {
 		this.wartosc = wartosc;
+		update();
 	}
 
 	public float getWartosc() {

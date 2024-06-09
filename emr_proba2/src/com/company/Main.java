@@ -3,10 +3,8 @@ package com.company;
 
 import com.company.DBManagment.*;
 import com.company.entities.*;
-import com.company.exceptions.PatientNotFoundException;
+import com.company.exceptions.NotAccessiblePatientException;
 
-import javax.print.Doc;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,6 +24,7 @@ public class Main {
             TestResult.setTestResultDAO(testResultDAO);
 
 
+
           //  Patient patient= new Patient("18987654321","Maciek", "Adamowicz", "123456789", Date.valueOf("2004-09-03"),"Kotem", patientDAO);
           //  Doctor doctor= new Doctor(1, "Kasia", "Zapala", Speciality.Kardiolog, doctorDAO);
 
@@ -33,7 +32,15 @@ public class Main {
             List<Patient> patientList=patientDAO.getAll();
 
             Patient patient=patientList.get(1);
-            Doctor doctor=doctorList.get(0);
+            System.out.println(patient);
+            Doctor doctor=doctorList.get(1);
+            try {
+                doctor.fillResult(3, 9);
+            }
+            catch (NotAccessiblePatientException e)
+            {
+                System.out.println(e.getMessage());
+            }
 //            patient.signToDoctor(doctor);
 //            String [] types=new String[]{"CisnienieRozkurczowe", "CisnienieSkurczowe"};
 //            TestOrder ord= doctor.orderTest(patient, types);
@@ -42,15 +49,9 @@ public class Main {
 //            for (TestResult res : results)
 //                System.out.println(res);
 
-            List<TestOrder> orders= patient.getTests();
-            for (TestOrder order : orders)
-            {
-                List<TestResult> results=order.getResults();
-                    if (results!=null) {
-                        for (TestResult testResult : results) {
+            List<TestResult> res= patient.getResults();
+            for (TestResult testResult : res) {
                             System.out.println(testResult.getResult());
-                        }
-                }
             }
 
         }

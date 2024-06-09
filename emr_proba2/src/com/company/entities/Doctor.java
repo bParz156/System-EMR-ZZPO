@@ -1,9 +1,9 @@
 package com.company.entities;
 
 import com.company.DBManagment.DoctorDAO;
+import com.company.exceptions.NotAccessiblePatientException;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -138,7 +138,17 @@ public class Doctor {
 		return doctorDAO.getById(id);
 	}
 
+	public void fillResult(int testResultId,Number number) throws NotAccessiblePatientException {
+		TestResult result= TestResult.getById(this, testResultId);
+		if (result==null)
+			throw new NotAccessiblePatientException();
+		else result.setValue(number);
+	}
 
 
+	public List<TestResult> resultsToFill()
+	{
+		return null;
+	}
 
 }

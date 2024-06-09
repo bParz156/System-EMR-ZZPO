@@ -13,10 +13,12 @@ public class TestCisnienieRozkurczowe extends TestResult {
 		super(order, TestTyp.CisnienieRozkurczowe);
 	}
 
-	public TestCisnienieRozkurczowe(int id, int rozkurczowe, Date date) {
+	public TestCisnienieRozkurczowe(int id, int order, int rozkurczowe, Date date) {
 		super(date, TestTyp.CisnienieRozkurczowe);
 		this.rozkurczowe = rozkurczowe;
 		this.id=id;
+		this.order=order;
+		this.resultDate=date;
 	}
 
 	public TestCisnienieRozkurczowe(Date date)
@@ -83,6 +85,7 @@ public class TestCisnienieRozkurczowe extends TestResult {
 	@Override
 	public void setValue(Number value) {
 		setRozkurczowe(value.intValue());
+		update();
 	}
 
 	@Override

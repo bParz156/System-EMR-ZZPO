@@ -167,4 +167,9 @@ public class PatientDAOImpl implements PatientDAO {
 
 
     }
+
+    @Override
+    public List<TestOrder> getTestsOrders(Patient patient) {
+        return TestOrder.getPatientsTestOrders(patient);
+    }
 }

@@ -14,6 +14,7 @@ public interface TestResultDAO {
     void delete(int id);
     void update(TestResult result);
     List<TestResult> getByOrder(TestOrder testOrder);
+    void setGraniceAll();
 
 
 }

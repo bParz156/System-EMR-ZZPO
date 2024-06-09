@@ -118,5 +118,16 @@ public class TestOrder {
 		return order;
 	}
 
+	public static void update(int id)
+	{
+		TestOrder order= testOrderDAO.getById(id);
+		testOrderDAO.update(order);
+	}
+
+	public static TestOrder getById(int id)
+	{
+		return testOrderDAO.getById(id);
+	}
+
 
 }
