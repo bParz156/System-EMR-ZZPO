@@ -1,1 +1,3 @@
-Inna wersja projektu oparta o fabrykę i SOLID. Diagram CLass 1 i bazy 2
+<h>Projekt systemu EMR (Electronic Medical Record) realizowany w ramach zajęć z przedmiotu Zaawansowane Zagadnienia Projektowania Obiektowego.</h> <br>
+<b>Autorki:</b> Barbara Parzonka, Joanna Zoglowek. <br>
+Dokumentacja projeku znajduje się w pliku dokumentacja.pdf
